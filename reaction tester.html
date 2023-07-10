@@ -1,0 +1,169 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reaction tester</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:ital@0;1&family=Qwitcher+Grypen:wght@700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            background: rgb(2, 0, 36);
+            background: linear-gradient(158deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 100%);
+            color: white;
+        }
+
+        #heading {
+            margin: auto 0px;
+            height: 175px;
+        }
+
+        #heading h1 {
+            text-align: center;
+            font-size: 150px;
+            font-family: 'Qwitcher Grypen', cursive;
+            border: solid white 2px;
+            border-radius: 30%;
+
+        }
+
+        .second{
+            /* background-color: burlywood; */
+            min-height: 100px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+
+
+        }
+
+        .start p{
+            font-size: 120%;
+        }
+        #butt {
+            display: block;
+            margin: auto;
+            font-size: 15px;
+        }
+
+        #spawn {
+
+            border: 1px rgb(67, 17, 17) solid;
+            height: 500px;
+            width: 1000px;
+            margin: 20px auto;
+            /* background-image: ; */
+
+        }
+
+        
+        
+    </style>
+</head>
+
+<body>
+
+
+    <div id="heading">
+        <h1>Reaction Tester</h1>
+    </div>
+
+    <div class="second">
+
+        <div class="timer">
+            <p class="float" id="timer">Time left: </p>
+        </div>
+
+        <div class="start">
+            <p>click on square or circle as fast as you can</p>
+            <button id="butt"> Start</button>
+        </div>
+
+        <div class="score">
+            <p class="float" id="score">Score: </p>
+        </div>
+
+
+    </div>
+
+    
+    <div id="spawn">
+
+
+    </div>
+
+    <script>
+
+        function createDiv(score) {
+            var divElement = document.createElement("Div");
+            divElement.id = "randDiv";
+
+            var divsize = ((Math.random() * 100) + 50).toFixed();
+            var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+
+            var posx = (250 + (Math.random() * (1000 - divsize))).toFixed();
+            var posy = (200 + (Math.random() * (500 - divsize))).toFixed();
+
+            divElement.style.backgroundColor = color;
+            divElement.style.border = '2px solid black'
+            divElement.style.width = divsize;
+            divElement.style.height = divsize;
+            divElement.style.position = "absolute";
+            divElement.style.left = posx + "px";
+            divElement.style.top = posy + "px";
+
+
+            divElement.style.borderRadius = (50 * Math.floor(Math.random() * 2)).toString() + "%"
+
+
+            document.getElementById("spawn").appendChild(divElement);
+
+
+            divElement.onclick = function () {
+
+                score += 1
+                document.getElementById("score").innerHTML = "score: " + score;
+                divElement.remove()
+                createDiv(score);
+            }
+        }
+
+        document.getElementById("butt").onclick = function () {
+            const str = document.getElementById("heading");
+
+            var timerID = setInterval(countdown, 1000);
+            var timeLeft = 10;
+            var score = 0;
+            createDiv(score);
+
+            function countdown() {
+                if (timeLeft == -1) {
+                    str.style.display = "block"
+                    const ele = document.getElementById("randDiv");
+                    ele.remove();
+                    clearTimeout(timerID);
+
+                } else {
+                    document.getElementById("timer").innerHTML = 'time left: ' + timeLeft;
+
+                    timeLeft--;
+                }
+
+            }
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>
